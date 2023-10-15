@@ -1,10 +1,11 @@
 package edu.hw1;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Task4 {
 
-    public String fixString(@NotNull String brokenString) {
+    public String fixString(String brokenString) {
+        if (brokenString == null) {
+            throw new IllegalArgumentException("input string must be not null");
+        }
         return brokenString.replaceAll("(.)(.)", "$2$1");
     }
 }

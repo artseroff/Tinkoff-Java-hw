@@ -1,14 +1,15 @@
 package edu.hw1;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Task1 {
 
     private static final int SECONDS_PER_MINUTE = 60;
 
     private static final String TIME_STRING_REGEX = "\\d{2,}:[0-5]\\d";
 
-    public long minutesToSeconds(@NotNull String timeText) {
+    public long minutesToSeconds(String timeText) {
+        if (timeText == null) {
+            throw new IllegalArgumentException("time string must be not null");
+        }
 
         if (!timeText.matches(TIME_STRING_REGEX)) {
             return -1L;
