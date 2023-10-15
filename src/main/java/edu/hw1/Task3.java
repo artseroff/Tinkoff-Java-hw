@@ -1,10 +1,12 @@
 package edu.hw1;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Task3 {
 
     private static final int MIN_VALID_ARR_LEN = 2;
 
-    public boolean isNestable(int[] firstArray, int[] secondArray) {
+    public boolean isNestable(@NotNull int[] firstArray, @NotNull int[] secondArray) {
         int firstArrayLen = firstArray.length;
         int secondArrayLen = secondArray.length;
 

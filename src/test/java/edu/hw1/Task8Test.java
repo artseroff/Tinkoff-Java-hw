@@ -52,7 +52,7 @@ class Task8Test {
     }
 
     @Test
-    public void fixStringNullInput() {
+    public void knightBoardCaptureNullInput() {
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> TASK_8.knightBoardCapture(null));
 

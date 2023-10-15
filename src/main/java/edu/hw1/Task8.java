@@ -1,11 +1,13 @@
 package edu.hw1;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Task8 {
     private static final int FIELD_SIZE = 8;
 
     private static final String INVALID_FIELD_SIZE_TEXT = "Field size is not 8x8";
 
-    public boolean knightBoardCapture(int[][] field) {
+    public boolean knightBoardCapture(@NotNull int[][] field) {
         if (field.length != FIELD_SIZE) {
             throw new IllegalArgumentException(INVALID_FIELD_SIZE_TEXT);
         }
