@@ -16,7 +16,7 @@ public class InputController {
     }
 
     public char validateGuess() throws InterruptGameException, InvalidInputException, IOException {
-        String input = null;
+        String input;
         input = reader.readLine();
         if (input == null) {
             throw new InterruptGameException("Игра прервана");
