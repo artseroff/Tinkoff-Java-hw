@@ -28,7 +28,7 @@ public class CallingInfoTest {
 
     @Test
     public void callingInfoInsideLambda() {
-        Supplier<CallingInfo> supplier = CallingInfoUtils::callingInfo;
+        Supplier<CallingInfo> supplier = ()->CallingInfoUtils.callingInfo();
         var info = supplier.get();
 
         Assertions.assertEquals(info.className(), this.getClass().getName());
