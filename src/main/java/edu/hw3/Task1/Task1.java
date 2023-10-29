@@ -1,5 +1,7 @@
 package edu.hw3.Task1;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Task1 {
     private static final char SMALL_A = 'a';
     private static final char SMALL_Z = 'z';
@@ -7,7 +9,10 @@ public class Task1 {
     private static final char HIGH_A = 'A';
     private static final char HIGH_Z = 'Z';
 
-    public String atbash(String input) {
+    public String atbash(@NotNull String input) {
+        if (input.isBlank()) {
+            return input;
+        }
         char[] chars = input.toCharArray();
         for (int i = 0; i < chars.length; i++) {
             if (isLatinUpperCase(chars[i])) {

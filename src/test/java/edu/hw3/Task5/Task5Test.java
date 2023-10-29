@@ -1,12 +1,13 @@
-package edu.hw3.Task4;
+package edu.hw3.Task5;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-public class Task4Test {
+public class Task5Test {
 
     @Test
     public void parseContacts() {
@@ -55,7 +56,7 @@ public class Task4Test {
                 new Person[] {Person.of("Donald"), Person.of("Alex"),
                     Person.of("Bob"), Person.of("Sergey")},
                 SortOrder.DESC,
-                new Person[] { Person.of("Sergey"),  Person.of("Donald"), Person.of("Bob"), Person.of("Alex")}
+                new Person[] {Person.of("Sergey"), Person.of("Donald"), Person.of("Bob"), Person.of("Alex")}
             ),
             Arguments.of(
                 new Person[] {Person.of("Donald Grey"), Person.of("Alex White"),
@@ -65,5 +66,28 @@ public class Task4Test {
                     Person.of("Bob")}
             )
         };
+    }
+
+    @Test
+    public void parseContactsInvalidArray() {
+        var expected = new Person[0];
+
+        var actual = PersonUtils.parseContacts(null, SortOrder.ASC);
+        Assertions.assertArrayEquals(expected, actual);
+
+        actual = PersonUtils.parseContacts(new Person[0], SortOrder.ASC);
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "  "})
+    public void buildPersonInvalidName(String fullname) {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> Person.of(fullname));
+    }
+
+    @Test
+    public void buildPersonNullName() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> Person.of(null));
     }
 }

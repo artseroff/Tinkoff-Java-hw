@@ -1,10 +1,10 @@
-package edu.hw3.Task4;
+package edu.hw3.Task5;
 
 import java.util.Objects;
 
 public class Person implements Comparable<Person> {
-    private String lastname;
-    private String firstname;
+    private final String lastname;
+    private final String firstname;
 
     private Person(String firstname, String lastname) {
         this.lastname = lastname;
@@ -34,10 +34,9 @@ public class Person implements Comparable<Person> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Person)) {
+        if (!(o instanceof Person person)) {
             return false;
         }
-        Person person = (Person) o;
         if (lastname == null) {
             return Objects.equals(firstname, (person.lastname == null ? person.firstname : person.lastname));
         } else {

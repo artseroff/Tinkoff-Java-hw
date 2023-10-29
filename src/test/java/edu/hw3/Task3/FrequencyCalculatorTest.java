@@ -9,8 +9,9 @@ public class FrequencyCalculatorTest {
 
     @ParameterizedTest
     @MethodSource("provideParameters")
-    public void freqDict(String[] input, String expected) {
-        var calculator = new FrequencyCalculator<String>();
+    public void freqDict(Object[] input, String expected) {
+
+        var calculator = new FrequencyCalculator<>();
         String actual = calculator.freqDict(input);
         Assertions.assertEquals(expected, actual);
     }
@@ -19,6 +20,8 @@ public class FrequencyCalculatorTest {
     private static Arguments[] provideParameters() {
         return new Arguments[] {
             Arguments.of(new String[] {"a", "bb", "a", "bb"}, "{bb: 2, a: 2}"),
+            Arguments.of(new String[] {"код", "код", "код", "bug"}, "{код: 3, bug: 1}"),
+            Arguments.of(new Integer[] {2, null, 1, 3, 2, 3, 3}, "{null: 1, 1: 1, 2: 2, 3: 3}")
         };
     }
 }

@@ -1,6 +1,5 @@
 package edu.hw3.Task1;
 
-import edu.hw3.Task1.Task1;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,6 +21,7 @@ public class Task1Test {
 
     @Test
     public void atbashAllDictionaryTest() {
+        // test all latin letters plus some non latin sequence from constant
         String expected;
         StringBuilder sbLetters = new StringBuilder();
         for (char i = 'A'; i <= 'Z'; i++) {
@@ -41,7 +41,7 @@ public class Task1Test {
         String input = sbLetters + NON_LATIN_SYMBOLS;
 
         expected += NON_LATIN_SYMBOLS;
-
+        // expected variable is reversed all latin letters plus non latin sequence
         String actual = new Task1().atbash(input);
         Assertions.assertEquals(expected, actual);
     }

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class FrequencyCalculator<T> {
-    private Map<T, Integer> dict = new HashMap<>();
+    private final Map<T, Integer> dict = new HashMap<>();
 
-    public String freqDict(T... args) {
+    public String freqDict(T[] args) {
         for (T elObject : args) {
             Integer foundCount = dict.get(elObject);
             dict.put(elObject, foundCount == null ? 1 : foundCount + 1);
