@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Task4 {
+
+    @SuppressWarnings("MagicNumber")
     private static final Map<Integer, String> ROMAN_DIGITS = new TreeMap<>(Comparator.reverseOrder()) {{
         put(1000, "M");
         put(900, "CM");
