@@ -44,4 +44,22 @@ public class MazeGeneratorTest {
         }
     }
 
+    @ParameterizedTest
+    @MethodSource("invalidMazeSizes")
+    void generateExceptionTest(int i, int j) {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new DFSMazeGenerator(i,j));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new EllerMazeGenerator(i,j));
+    }
+
+    static Arguments[] invalidMazeSizes() {
+        return new Arguments[]{
+            Arguments.of(-2, -2),
+            Arguments.of(2, 0),
+            Arguments.of(0, 2),
+            Arguments.of(16,40),
+            Arguments.of(15,41),
+            Arguments.of(16,41)
+        };
+    }
+
 }

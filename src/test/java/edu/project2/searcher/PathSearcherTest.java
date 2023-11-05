@@ -3,17 +3,14 @@ package edu.project2.searcher;
 import edu.project2.Cell;
 import edu.project2.Maze;
 import edu.project2.generator.DFSMazeGenerator;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class PathSearcherTest {
 
@@ -81,5 +78,20 @@ public class PathSearcherTest {
     public void getPossiblePassages(PathSearcher searcher, Coordinate coordinate, Set<Coordinate> expected) {
         var actual = new HashSet<>(searcher.getPossiblePassages(coordinate));
         Assertions.assertEquals(expected,actual);
+    }
+
+    static Arguments[] coordsTestsSearchersParams() {
+        return new Arguments[]{
+            Arguments.of(new Coordinate(N1 + 1, M1 + 1), new Coordinate(0, 0)),
+            Arguments.of(new Coordinate(0, 0), new Coordinate(N1 + 1, M1 + 1))
+        };
+    }
+    @ParameterizedTest
+    @MethodSource("coordsTestsSearchersParams")
+    void searchCoordinatesException(Coordinate start, Coordinate end) {
+        Maze maze = new Maze(2,2, new Cell[2][2]);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new BFSPathSearcher(maze,start,end));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new DFSPathSearcher(maze,start,end));
+
     }
 }
