@@ -7,10 +7,9 @@ public class Cell {
     public Cell() {
     }
 
-    public static Cell buildCopyOfBottom(Cell cell) {
-        Cell copy = new Cell();
-        copy.isBottomWalled = cell.isBottomWalled;
-        return copy;
+    public Cell(boolean isRightWalled, boolean isBottomWalled) {
+        this.isRightWalled = isRightWalled;
+        this.isBottomWalled = isBottomWalled;
     }
 
     public boolean isRightWalled() {

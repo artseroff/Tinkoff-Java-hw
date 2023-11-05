@@ -1,0 +1,47 @@
+package edu.project2.generator;
+
+import edu.project2.Maze;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+public class MazeGeneratorTest {
+    private static final int N1 = 15;
+    private static final int M1 = 40;
+
+    static Arguments[] generators() {
+
+        return new Arguments[] {
+            Arguments.of(new DFSMazeGenerator(N1, M1)),
+            Arguments.of(new EllerMazeGenerator(N1, M1))
+        };
+    }
+
+    @ParameterizedTest
+    @MethodSource("generators")
+    void generateTest(MazeGenerator generator) {
+        // тест, что есть хотя бы один проход в соседнюю
+        Maze maze = generator.generate();
+        var grid = maze.grid();
+        for (int i = 0; i < N1; i++) {
+            for (int j = 0; j < M1; j++) {
+                boolean existsPath = false;
+                if (!grid[i][j].isRightWalled()) {
+                    existsPath = true;
+                }
+                if (!grid[i][j].isBottomWalled()) {
+                    existsPath = true;
+                }
+                if (j > 0 && !grid[i][j - 1].isRightWalled()) {
+                    existsPath = true;
+                }
+                if (i > 0 && !grid[i - 1][j].isBottomWalled()) {
+                    existsPath = true;
+                }
+                Assertions.assertTrue(existsPath);
+            }
+        }
+    }
+
+}
