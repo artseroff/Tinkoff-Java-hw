@@ -1,5 +1,6 @@
 package edu.hw6.task1;
 
+import edu.hw6.FilePathChecker;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -14,31 +15,20 @@ import org.jetbrains.annotations.NotNull;
 public class DiskMap implements Map<String, String> {
     private final Map<String, String> innerMap;
     private final Path path;
+    private static final String KEY_VALUE_SEPARATOR = ":";
 
     private DiskMap(Path path, Map<String, String> map) {
         this.path = path;
         this.innerMap = map;
     }
 
-    private static void checkFilePath(Path path, boolean needCheckExistence) throws NoSuchFileException {
-        if (needCheckExistence && !Files.exists(path)) {
-            throw new NoSuchFileException("File not found");
-        }
-        if (Files.isDirectory(path)) {
-            throw new IllegalArgumentException("Path must be not directory");
-        }
-    }
-
-    private static void checkFilePath(Path path) throws NoSuchFileException {
-        checkFilePath(path, true);
-    }
 
     public static DiskMap readMapFromFile(Path path) throws IOException {
-        checkFilePath(path);
+        FilePathChecker.checkFilePath(path);
         try (var streamLines = Files.lines(path)) {
             Map<String, String> map = streamLines
                 .map(string -> {
-                    String[] splitString = string.strip().split(":");
+                    String[] splitString = string.strip().split(KEY_VALUE_SEPARATOR);
                     return new AbstractMap.SimpleEntry<>(splitString[0], splitString[1]);
                 })
                 .collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue));
@@ -50,7 +40,7 @@ public class DiskMap implements Map<String, String> {
     }
 
     public void saveToFile(Path path) throws NoSuchFileException {
-        checkFilePath(path, false);
+        FilePathChecker.checkFilePath(path, false);
         try {
             Files.writeString(path, innerMapToString());
         } catch (IOException e) {
@@ -61,7 +51,7 @@ public class DiskMap implements Map<String, String> {
     private String innerMapToString() {
         StringBuilder result = new StringBuilder();
         for (Entry<String, String> entry : innerMap.entrySet()) {
-            result.append("%s:%s\n".formatted(entry.getKey(), entry.getValue()));
+            result.append("%s%s%s\n".formatted(entry.getKey(), KEY_VALUE_SEPARATOR, entry.getValue()));
         }
         return result.toString();
     }

@@ -1,9 +1,9 @@
 package edu.hw6.task2;
 
+import edu.hw6.FilePathChecker;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import org.jetbrains.annotations.NotNull;
@@ -16,15 +16,8 @@ public class FileCloner {
     }
 
     public static void cloneFile(@NotNull Path pathSource) throws IOException {
-        if (pathSource.getFileName().toString().isBlank()) {
-            throw new IllegalArgumentException("Empty path");
-        }
-        if (!Files.exists(pathSource)) {
-            throw new NoSuchFileException("File not found");
-        }
-        if (Files.isDirectory(pathSource)) {
-            throw new IllegalArgumentException("Path must be not directory");
-        }
+
+        FilePathChecker.checkFilePath(pathSource, true);
         Path pathToCopy = foundActualCloneName(pathSource);
         Files.copy(pathSource, pathToCopy, StandardCopyOption.COPY_ATTRIBUTES, LinkOption.NOFOLLOW_LINKS);
     }

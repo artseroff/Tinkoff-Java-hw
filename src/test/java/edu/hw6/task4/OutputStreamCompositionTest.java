@@ -13,6 +13,6 @@ class OutputStreamCompositionTest {
         Path path = Path.of("src/test/java/edu/hw6/task4").resolve("1.txt");
         String textInsideFile = "textInsideFile";
         OutputStreamComposition.write(path, textInsideFile);
-        Assertions.assertEquals(textInsideFile, Files.readString(path).strip());
+        Assertions.assertEquals(textInsideFile, Files.readString(path));
     }
 }

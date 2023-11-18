@@ -2,12 +2,9 @@ package edu.project2.searcher;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class CoordinateTest {
 
@@ -18,7 +15,7 @@ public class CoordinateTest {
     }
 
     public static Arguments[] invalidCoordinates() {
-        return new Arguments[]{
+        return new Arguments[] {
             Arguments.of(-1, 0),
             Arguments.of(0, -1),
             Arguments.of(-100, -100)
