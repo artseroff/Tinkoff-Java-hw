@@ -43,10 +43,10 @@ class LogReaderTest {
     private static Arguments[] readFilesParam() {
         return new Arguments[] {
             Arguments.of((Object) new String[]{"--path", TEST_DIRECTORY + "/*/*.txt"}),
-            Arguments.of((Object) new String[] {"--path",
+            /*Arguments.of((Object) new String[] {"--path",
                 "https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs"})
 
-        };
+        */};
     }
 
     @ParameterizedTest

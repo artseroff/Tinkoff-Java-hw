@@ -28,7 +28,7 @@ class LogAnalyserTest {
 
     @AfterEach
     private void deleteTempFile() throws IOException {
-        Files.delete(TEMP_FILE_PATH);
+        Files.deleteIfExists(TEMP_FILE_PATH);
     }
 
     private LogAnalyser buildAnalyser() throws IOException, IllegalConfigurationException {
