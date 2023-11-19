@@ -39,10 +39,6 @@ class LogReaderTest {
     }
 
 
-    public void task1(List<Animal> input, List<Animal> expected) {
-        List<Animal> actual = AnimalUtils.task1(input);
-        Assertions.assertEquals(expected, actual);
-    }
 
     private static Arguments[] readFilesParam() {
         return new Arguments[] {
