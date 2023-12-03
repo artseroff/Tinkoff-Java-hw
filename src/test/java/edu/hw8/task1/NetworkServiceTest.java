@@ -1,6 +1,6 @@
-package edu.hw8;
+package edu.hw8.task1;
 
-import edu.hw8.server.NetworkService;
+import edu.hw8.task1.server.NetworkService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;

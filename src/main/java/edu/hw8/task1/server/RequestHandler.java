@@ -1,4 +1,4 @@
-package edu.hw8.server;
+package edu.hw8.task1.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 
 public class RequestHandler implements Runnable {
 
@@ -22,7 +23,7 @@ public class RequestHandler implements Runnable {
     private final BufferedReader clientReader;
     private final PrintStream printStream;
 
-    public RequestHandler(Socket socket) throws IOException {
+    public RequestHandler(@NotNull Socket socket) throws IOException {
         this.socket = socket;
         this.clientReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.printStream = new PrintStream(socket.getOutputStream());
