@@ -67,6 +67,26 @@ class PathFiltersTest {
     }
 
     @Test
+    public void globOrTest() throws IOException {
+        GlobMatchesFilter txtFilter = new GlobMatchesFilter("*.txt");
+        GlobMatchesFilter pngFilter = new GlobMatchesFilter("*.png");
+        GlobMatchesFilter bmpFilter = new GlobMatchesFilter("*.bmp");
+
+        DirectoryStream.Filter<Path> filter = txtFilter.or(pngFilter).or(bmpFilter);
+
+        int countFiles = 0;
+        try (DirectoryStream<Path> entries = Files.newDirectoryStream(TEST_FILES_DIRECTORY, filter)) {
+
+            var iterator = entries.iterator();
+            while (iterator.hasNext()) {
+                countFiles++;
+                iterator.next();
+            }
+        }
+        Assertions.assertEquals(3, countFiles);
+    }
+
+    @Test
     public void globPngFiles() throws IOException {
         GlobMatchesFilter pngFilter = new GlobMatchesFilter("*.png");
 

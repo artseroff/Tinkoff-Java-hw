@@ -21,7 +21,7 @@ public class DFSPathSearcher extends PathSearcher {
             return true;
         }
         path.add(coordinate);
-        for (Coordinate neighbour : getPossiblePassages(coordinate)) {
+        for (Coordinate neighbour : maze.getPossiblePassages(coordinate)) {
             if (!path.contains(neighbour)) {
                 if (dfs(neighbour)) {
                     return true;

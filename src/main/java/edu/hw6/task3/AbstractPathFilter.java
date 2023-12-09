@@ -9,4 +9,8 @@ public interface AbstractPathFilter extends DirectoryStream.Filter<Path> {
     default AbstractPathFilter and(@NotNull AbstractPathFilter other) {
         return p -> accept(p) && other.accept(p);
     }
+
+    default AbstractPathFilter or(@NotNull AbstractPathFilter other) {
+        return p -> accept(p) || other.accept(p);
+    }
 }
