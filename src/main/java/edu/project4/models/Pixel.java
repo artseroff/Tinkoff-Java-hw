@@ -42,7 +42,7 @@ public class Pixel {
     public int getHitCount() {
         return hitCount;
     }
-    
+
     public double getNormal() {
         return normal;
     }
