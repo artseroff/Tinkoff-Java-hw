@@ -2,7 +2,6 @@ package edu.hw10.task1.arguments;
 
 import edu.hw10.task1.annotations.Max;
 import edu.hw10.task1.annotations.Min;
-
 import java.lang.annotation.Annotation;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
