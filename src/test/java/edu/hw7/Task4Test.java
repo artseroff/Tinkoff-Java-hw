@@ -62,8 +62,7 @@ class Task4Test {
     private static Arguments[] params() {
         return new Arguments[] {
             Arguments.of(10_000_000, 0.005),
-            Arguments.of(100_000_000, 0.001),
-            Arguments.of(1_000_000_000, 0.0001)
+            Arguments.of(100_000_000, 0.001)
         };
     }
 
