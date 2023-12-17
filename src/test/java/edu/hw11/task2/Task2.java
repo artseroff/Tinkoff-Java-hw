@@ -1,5 +1,6 @@
 package edu.hw11.task2;
 
+import java.io.IOException;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
@@ -7,7 +8,6 @@ import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
 
 public class Task2 {
     @Test
@@ -18,19 +18,22 @@ public class Task2 {
             .fromInstalledAgent();
 
         //Act
-        new ByteBuddy()
-            .redefine(ArithmeticUtils.class)
-            .method(ElementMatchers.named("sum"))
-            .intercept(MethodDelegation.to(MockUtils.class))
-            .make()
-            .load(ArithmeticUtils.class.getClassLoader(), classReloadingStrategy);
+        try (var unloaded = new ByteBuddy()
+                 .redefine(ArithmeticUtils.class)
+                 .method(ElementMatchers.named("sum"))
+                 .intercept(MethodDelegation.to(MockUtils.class))
+                 .make()){
 
-        //Assert
-        Assertions.assertEquals(5,ArithmeticUtils.sum(1,5));
+            unloaded.load(ArithmeticUtils.class.getClassLoader(), classReloadingStrategy);
 
-        //Act&&Assert
-        classReloadingStrategy.reset(ArithmeticUtils.class);
-        Assertions.assertEquals(6,ArithmeticUtils.sum(1,5));
+            //Assert
+            Assertions.assertEquals(5, ArithmeticUtils.sum(1, 5));
+
+            //Act && Assert
+            classReloadingStrategy.reset(ArithmeticUtils.class);
+            Assertions.assertEquals(6, ArithmeticUtils.sum(1, 5));
+        }
+
     }
 
     public static class ArithmeticUtils {

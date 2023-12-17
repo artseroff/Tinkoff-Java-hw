@@ -14,20 +14,22 @@ public class Task1 {
     @Test
     void helloByteBuddyTest() throws InstantiationException, IllegalAccessException, InvocationTargetException {
         //Act
-        DynamicType.Unloaded<Object> unloadedType = new ByteBuddy()
+        try (DynamicType.Unloaded<Object> unloadedType = new ByteBuddy()
             .subclass(Object.class)
             .method(ElementMatchers.isToString())
             .intercept(FixedValue.value(MESSAGE))
-            .make();
+            .make()) {
 
-        Class<?> dynamicType = unloadedType
-            .load(getClass().getClassLoader())
-            .getLoaded();
+            Class<?> dynamicType = unloadedType
+                .load(getClass().getClassLoader())
+                .getLoaded();
 
-        var obj = dynamicType.getDeclaredConstructors()[0].newInstance();
+            var obj = dynamicType.getDeclaredConstructors()[0].newInstance();
 
-        //Assert
-        Assertions.assertEquals(MESSAGE, obj.toString());
+            //Assert
+            Assertions.assertEquals(MESSAGE, obj.toString());
+        }
+
 
     }
 }
