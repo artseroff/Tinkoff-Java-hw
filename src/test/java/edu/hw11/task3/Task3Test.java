@@ -101,7 +101,7 @@ public class Task3Test {
             mv.visitInsn(Opcodes.ICONST_1);
             mv.visitJumpInsn(Opcodes.IF_ICMPGT, l1);
 
-            // return 1
+            // return n
             mv.visitVarInsn(Opcodes.ILOAD, 0);
             mv.visitInsn(Opcodes.I2L);
             mv.visitInsn(Opcodes.LRETURN);
