@@ -36,9 +36,7 @@ public class Task3Test {
 
     @ParameterizedTest
     @MethodSource("params")
-    void fibTest() throws Exception {
-        int n = 1;
-        long expected = 1;
+    void fibTest(int n, long expected) throws Exception {
         //Arrange
         Class<?> fibonacciCalculator = buildClassWithByteBuddyAndASM();
 
