@@ -9,7 +9,7 @@ import net.bytebuddy.matcher.ElementMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class Task2Test {
+public class Task2 {
     @Test
     void redefineMethod() throws IOException {
         //Arrange
