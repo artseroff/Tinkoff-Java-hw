@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 import org.jetbrains.annotations.NotNull;
 
 public class StatsCollector {
-    private final static int COUNT_THREADS = Runtime.getRuntime().availableProcessors();
+    private static final int COUNT_THREADS = Runtime.getRuntime().availableProcessors();
     private final ExecutorService executorService;
     private final List<Future<Metric>> futureMetrics = Collections.synchronizedList(new LinkedList<>());
 

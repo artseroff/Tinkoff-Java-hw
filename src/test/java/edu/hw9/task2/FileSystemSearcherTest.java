@@ -36,40 +36,69 @@ class FileSystemSearcherTest {
 
     @Test
     void searchDirectories() throws IOException {
+        //Arrange
         createFiles();
 
-        var expected = List.of(tempDir,tempDir.resolve("test1"));
+        var expected = List.of(tempDir, tempDir.resolve("test1"));
 
+        //Act
         var actual = FileSystemSearcher.searchDirectories(tempDir, 2);
-        Assertions.assertEquals(expected,actual);
+
+        //Assert
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
     void searchFiles() throws IOException {
+        //Arrange
         createFiles();
-        var expected = List.of(tempDir.resolve("test1").resolve("test1_1File.bmp"),
-            tempDir.resolve("test1").resolve("test1_1").resolve("test1_1_1").resolve("test1_1_1_1File.txt"));
+        var expected = List.of(
+            tempDir.resolve("test1").resolve("test1_1File.bmp"),
+            tempDir.resolve("test1").resolve("test1_1").resolve("test1_1_1").resolve("test1_1_1_1File.txt")
+        );
 
         GlobMatchesFilter txtFilter = new GlobMatchesFilter("*.txt");
         GlobMatchesFilter bmpFilter = new GlobMatchesFilter("*.bmp");
         AbstractPathFilter largerThan = PathFilters.largerThan(3);
         AbstractPathFilter lessThan = PathFilters.lessThan(10);
-        AbstractPathFilter filter =  txtFilter.or(bmpFilter).and(largerThan).and(lessThan);
+        AbstractPathFilter filter = txtFilter.or(bmpFilter).and(largerThan).and(lessThan);
+
+        //Act
         var actual = FileSystemSearcher.searchFiles(tempDir, filter);
-        Assertions.assertEquals(expected,actual);
+
+        //Assert
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void searchFilesExceptionTest() throws IOException {
+    void searchFilesPathIsFileExceptionTest() throws IOException {
+        //Arrange
         createFiles();
+
+        Class<?> expected = IllegalArgumentException.class;
         var pathFile = tempDir.resolve("test1File.txt");
         var filter = PathFilters.READABLE;
-        Assertions.assertThrows(IllegalArgumentException.class, ()->FileSystemSearcher.searchFiles(pathFile, filter));
+
+        //Act
+        Throwable t = org.assertj.core.api.Assertions
+            .catchThrowable(() -> FileSystemSearcher.searchFiles(pathFile, filter));
+
+        //Assert
+        Assertions.assertEquals(expected, t.getClass());
     }
+
     @Test
-    void searchDirExceptionTest() throws IOException {
+    void searchDirPathMustBeFileExceptionTest() throws IOException {
+        //Arrange
         createFiles();
+        Class<?> expected = IllegalArgumentException.class;
         var pathFile = tempDir.resolve("test1File.txt");
-        Assertions.assertThrows(IllegalArgumentException.class, ()->FileSystemSearcher.searchDirectories(pathFile, 1));
+
+        //Act
+        Throwable t = org.assertj.core.api.Assertions
+            .catchThrowable(() -> FileSystemSearcher.searchDirectories(pathFile, 1));
+
+        //Assert
+        Assertions.assertEquals(expected, t.getClass());
     }
 }

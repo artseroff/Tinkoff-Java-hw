@@ -14,6 +14,7 @@ class StatsCollectorTest {
 
     @Test
     void statsTest() throws InterruptedException, ExecutionException {
+        //Arrange
         List<Metric> expectedMetrics = List.of(
             new Metric("name1", 10.0, 2.5, 4, 1),
             new Metric("name2", 1, 0.33333, 0.33333, 0.33333),
@@ -29,6 +30,8 @@ class StatsCollectorTest {
         StatsCollector collector = new StatsCollector();
 
         Thread[] producers = new Thread[statsMap.size()];
+
+        //Act
         int i = 0;
         for (var entry : statsMap.entrySet()) {
             producers[i] = new Thread(() -> collector.push(entry.getKey(), entry.getValue()));
@@ -41,6 +44,8 @@ class StatsCollectorTest {
         }
 
         List<Metric> result = collector.stats();
+
+        //Assert
         for (var metric : result) {
             var expected = expectedMetrics.stream()
                 .filter(e -> e.name().equals(metric.name()))
@@ -57,6 +62,7 @@ class StatsCollectorTest {
 
     @Test
     void complexTest() throws InterruptedException, ExecutionException {
+        //Arrange
         Metric expected = new Metric("name1", 10.0, 2.5, 4, 1);
 
         AbstractMap.SimpleEntry<String, double[]> statistic =
@@ -66,6 +72,7 @@ class StatsCollectorTest {
 
         int countProducers = 10_000;
         Thread[] producers = new Thread[countProducers];
+
 
         CountDownLatch latch = new CountDownLatch(1);
         for (int i = 0; i < countProducers; i++) {
@@ -79,12 +86,16 @@ class StatsCollectorTest {
             });
             producers[i].start();
         }
+
+        //Act
         latch.countDown();
         for (var producer : producers) {
             producer.join();
         }
 
         List<Metric> result = collector.stats();
+
+        //Assert
         for (var metric : result) {
 
             Assertions.assertEquals(expected.name(), metric.name());
