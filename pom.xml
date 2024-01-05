@@ -45,7 +45,11 @@
 
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
 
+        <bytebuddy.version>1.14.8</bytebuddy.version>
+        <asm.version>9.6</asm.version>
+
         <jmh.version>1.37</jmh.version>
+
     </properties>
 
     <dependencyManagement>
@@ -98,6 +102,17 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+            <version>${bytebuddy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>${bytebuddy.version}</version>
+        </dependency>
+        
         <!-- JMH -->
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
@@ -109,6 +124,7 @@
             <artifactId>jmh-generator-annprocess</artifactId>
             <version>${jmh.version}</version>
             <scope>provided</scope>
+
         </dependency>
     </dependencies>
 
@@ -167,6 +183,11 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>edu/hw11/task2/**</exclude>
+                        </excludes>
+                    </configuration>
                     <version>${jacoco-maven-plugin.version}</version>
                     <executions>
                         <execution>

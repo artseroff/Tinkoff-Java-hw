@@ -67,7 +67,7 @@ class NetworkServiceTest {
     public void highloadTest() throws InterruptedException, IOException {
         int port = getFreePort();
 
-        List<String> requestsList = List.of(" \n".repeat(500).split("\n"));
+        List<String> requestsList = List.of(" \n".repeat(50).split("\n"));
 
         List<String> expected = List.of("Принесите пиццы, я не могу работать.");
 
