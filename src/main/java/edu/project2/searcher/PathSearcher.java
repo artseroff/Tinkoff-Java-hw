@@ -2,7 +2,6 @@ package edu.project2.searcher;
 
 import edu.project2.Maze;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class PathSearcher {
@@ -24,25 +23,5 @@ public abstract class PathSearcher {
     }
 
     public abstract List<Coordinate> search();
-
-    List<Coordinate> getPossiblePassages(Coordinate coordinate) {
-        int i = coordinate.row();
-        int j = coordinate.col();
-        var grid = maze.grid();
-        List<Coordinate> list = new LinkedList<>();
-        if (j < maze.cols() && !grid[i][j].isRightWalled()) {
-            list.add(new Coordinate(i, j + 1));
-        }
-        if (i < maze.rows() && !grid[i][j].isBottomWalled()) {
-            list.add(new Coordinate(i + 1, j));
-        }
-        if (j > 0 && !grid[i][j - 1].isRightWalled()) {
-            list.add(new Coordinate(i, j - 1));
-        }
-        if (i > 0 && !grid[i - 1][j].isBottomWalled()) {
-            list.add(new Coordinate(i - 1, j));
-        }
-        return list;
-    }
 
 }

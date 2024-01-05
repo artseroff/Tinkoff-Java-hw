@@ -5,6 +5,7 @@ import edu.project2.Maze;
 import edu.project2.generator.DFSMazeGenerator;
 import java.util.HashSet;
 import java.util.Set;
+import edu.project2.searcher.concurrent.ConcurrentDFSPathSearcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,15 @@ public class PathSearcherTest {
     }
 
     @Test
+    void concurrentDfsSearchNormalMaze() {
+        for (int i = 0; i < 100; i++) {
+            Coordinate start = Coordinate.getRandom(N1, M1);
+            Coordinate end = Coordinate.getRandom(N1, M1);
+            Assertions.assertFalse(new ConcurrentDFSPathSearcher(normalMaze, start, end).search().isEmpty());
+        }
+    }
+
+    @Test
     void dfsSearchNoPaths() {
         for (int i = 0; i < 100; i++) {
             Coordinate start = new Coordinate(0, 0);
@@ -63,6 +73,15 @@ public class PathSearcherTest {
         }
     }
 
+    @Test
+    void concurrentDfsSearchNoPaths() {
+        for (int i = 0; i < 100; i++) {
+            Coordinate start = new Coordinate(0, 0);
+            Coordinate end = new Coordinate(0, 1);
+            Assertions.assertTrue(new ConcurrentDFSPathSearcher(mazeWithNoPaths, start, end).search().isEmpty());
+        }
+    }
+
     static Arguments[] searchers() {
         Maze maze = new Maze(2, 2, new Cell[][] {{new Cell(), new Cell()}, {new Cell(), new Cell()}});
         var start = new Coordinate(0, 0);
@@ -77,6 +96,11 @@ public class PathSearcherTest {
                 new DFSPathSearcher(maze, start, end),
                 new Coordinate(0, 0),
                 Set.of(new Coordinate(0, 1), new Coordinate(1, 0))
+            ),
+            Arguments.of(
+                new ConcurrentDFSPathSearcher(maze, start, end),
+                new Coordinate(0, 0),
+                Set.of(new Coordinate(0, 1), new Coordinate(1, 0))
             )
         };
     }
@@ -84,7 +108,7 @@ public class PathSearcherTest {
     @ParameterizedTest
     @MethodSource("searchers")
     public void getPossiblePassages(PathSearcher searcher, Coordinate coordinate, Set<Coordinate> expected) {
-        var actual = new HashSet<>(searcher.getPossiblePassages(coordinate));
+        var actual = new HashSet<>(searcher.maze.getPossiblePassages(coordinate));
         Assertions.assertEquals(expected, actual);
     }
 
@@ -101,6 +125,7 @@ public class PathSearcherTest {
         Maze maze = new Maze(2, 2, new Cell[2][2]);
         Assertions.assertThrows(IllegalArgumentException.class, () -> new BFSPathSearcher(maze, start, end));
         Assertions.assertThrows(IllegalArgumentException.class, () -> new DFSPathSearcher(maze, start, end));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new ConcurrentDFSPathSearcher(maze, start, end));
 
     }
 }

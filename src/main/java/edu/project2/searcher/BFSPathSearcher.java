@@ -27,7 +27,7 @@ public class BFSPathSearcher extends PathSearcher {
             // текущий родитель
             MazeTreeNode currentTreeNode = new MazeTreeNode(parentNode, current);
 
-            for (Coordinate situation : getPossiblePassages(current)) {
+            for (Coordinate situation : maze.getPossiblePassages(current)) {
 
                 MazeTreeNode treeNode = new MazeTreeNode(currentTreeNode, situation);
                 // если найденного узла с ситуацией не было в очереди
